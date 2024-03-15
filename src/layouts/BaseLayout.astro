@@ -1,0 +1,130 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import { SiteLanguage, SiteTitle } from '~/config';
+import 'lxgw-wenkai-screen-web/lxgwwenkaigbscreen/result.css';
+
+export interface Props {
+	title?: string;
+	description?: string;
+	socialImage?: string;
+	rootClass?:
+		| Iterable<string | Record<string, boolean> | string[] | false | null | undefined>
+		| string;
+	bodyClass?:
+		| Iterable<string | Record<string, boolean> | string[] | false | null | undefined>
+		| string;
+}
+const { title, description, socialImage, rootClass, bodyClass } = Astro.props;
+const socialImg = new URL(socialImage ?? '/og.png', Astro.url).href;
+---
+
+<html lang={SiteLanguage} class:list={rootClass}>
+	<head>
+		<!-- Global Metadata -->
+		<meta charset="utf-8" />
+		<link rel="canonical" href={Astro.url.href} />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title=`${SiteTitle} RSS Feed`
+			href="/rss.xml"
+		/>
+		<link
+			rel="sitemap"
+			type="application/xml"
+			title=`${SiteTitle} site map`
+			href="/sitemap-index.xml"
+		/>
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:title" content={title} />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImg} />
+		<meta property="og:site_name" content={SiteTitle} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={Astro.url.href} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImg} />
+
+		<ViewTransitions />
+
+		<style is:global>
+			@tailwind base;
+			@layer base {
+				*:hover,
+				*:focus,
+				*:active {
+					@apply motion-safe:transition;
+				}
+
+				:root {
+					@apply scroll-smooth antialiased;
+
+					--pagefind-ui-scale: 1;
+					--pagefind-ui-primary: theme('colors.neutral.800');
+					--pagefind-ui-text: theme('colors.neutral.600');
+					--pagefind-ui-background: theme('colors.neutral.50');
+					--pagefind-ui-border: theme('colors.zinc.300');
+					--pagefind-ui-tag: theme('colors.zinc.300');
+					--pagefind-ui-font: inherit;
+				}
+
+				:root:is(.dark) {
+					--pagefind-ui-primary: #eeeeee;
+					--pagefind-ui-text: theme('colors.neutral.50');
+					--pagefind-ui-background: #212223;
+					--pagefind-ui-border: theme('colors.neutral.600');
+					--pagefind-ui-tag: theme('colors.neutral.600');
+
+					.astro-code,
+					.astro-code span {
+						color: var(--shiki-dark) !important;
+						background-color: var(--shiki-dark-bg) !important;
+						font-style: var(--shiki-dark-font-style) !important;
+						font-weight: var(--shiki-dark-font-weight) !important;
+						text-decoration: var(--shiki-dark-text-decoration) !important;
+					}
+				}
+
+				@media (prefers-color-scheme: dark) {
+					:root:not(.light) {
+						--pagefind-ui-primary: #eeeeee;
+						--pagefind-ui-text: theme('colors.neutral.50');
+						--pagefind-ui-background: #212223;
+						--pagefind-ui-border: theme('colors.neutral.600');
+						--pagefind-ui-tag: theme('colors.neutral.600');
+
+						.astro-code,
+						.astro-code span {
+							color: var(--shiki-dark) !important;
+							background-color: var(--shiki-dark-bg) !important;
+							font-style: var(--shiki-dark-font-style) !important;
+							font-weight: var(--shiki-dark-font-weight) !important;
+							text-decoration: var(--shiki-dark-text-decoration) !important;
+						}
+					}
+				}
+			}
+
+			@tailwind components;
+			@tailwind utilities;
+		</style>
+	</head>
+	<body class:list={bodyClass}>
+		<slot />
+	</body>
+</html>

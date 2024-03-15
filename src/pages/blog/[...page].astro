@@ -1,0 +1,19 @@
+---
+import type { GetStaticPathsOptions } from 'astro';
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import Paginator from '~/components/Paginator.astro';
+import { PageSize } from '~/config';
+import { getPosts } from '~/utils/collection';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	return paginate(await getPosts(false, 'desc'), { pageSize: PageSize });
+}
+
+const { page } = Astro.props;
+---
+
+<ScaffoldLayout title="Blog" description="Latest articles." currentNav="Blog">
+	{page.data.map((post) => <PostCard {...post} />)}
+	<Paginator {...page} />
+</ScaffoldLayout>

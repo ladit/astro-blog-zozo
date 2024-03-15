@@ -1,0 +1,51 @@
+---
+import { Picture } from 'astro:assets';
+import MarkdownLayout from '~/layouts/MarkdownLayout.astro';
+import { SiteTitle, SiteDescription } from '~/config';
+import img from '~/assets/undraw_dog_c7i6.svg';
+---
+
+<MarkdownLayout
+	title={SiteTitle}
+	description={SiteDescription}
+	hide={['title', 'comments']}
+	currentNav="Home"
+>
+	<div class="flex flex-col items-center gap-4 xl:flex-row">
+		<Picture class="lg:max-w-md" src={img} formats={['avif', 'webp']} alt="a dog" loading="eager" />
+		<div>
+			<h1>Hello there! I am Ladit👋</h1>
+			<p>
+				This is a blog template built with <a href="https://astro.build">Astro</a>. The theme
+				originates from <a href="https://github.com/varkai/hugo-theme-zozo">hugo-theme-zozo</a>.
+				Check out the docs on <a
+					href="https://github.com/ladit/astro-blog-zozo"
+					target="_blank"
+					rel="noopener">GitHub</a
+				> to get started. Here are some features:
+			</p>
+			<ul class="list-disc">
+				<li>
+					Fast and light weight. Lighthouse 4 * 100/100 on desktop. 1 point decreased on mobile.
+				</li>
+				<li>
+					<a href="https://astro.build">Astro 4</a> with no other UI frameworks intergrated for better
+					performance
+				</li>
+				<li>
+					mobile-friendly responsive design with <a href="https://tailwindcss.com/">Tailwind CSS</a>
+				</li>
+				<li>
+					Light / dark theme derived from <a href="https://github.com/varkai/hugo-theme-zozo"
+						>hugo-theme-zozo</a
+					>
+				</li>
+				<li>Markdown post support with emoji shortcode, katex</li>
+				<li>static search with <a href="https://pagefind.app">Pagefind</a></li>
+				<li>comment system powered by <a href="https://github.com/giscus/giscus">giscus</a></li>
+				<li>SEO-friendly setup with canonical URLs and OpenGraph data</li>
+				<li>RSS / Sitemap.xml / dynamic open graph image generation</li>
+			</ul>
+		</div>
+	</div>
+</MarkdownLayout>

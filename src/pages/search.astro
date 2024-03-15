@@ -1,0 +1,9 @@
+---
+//@ts-expect-error Import declaration conflicts with local declaration
+import Search from 'astro-pagefind/components/Search';
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
+---
+
+<ScaffoldLayout title="Search" description="Search this site">
+	<Search id="searcher" />
+</ScaffoldLayout>

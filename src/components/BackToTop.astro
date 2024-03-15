@@ -1,0 +1,48 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+	transition:persist
+	id="back-to-top"
+	class="fixed
+	bottom-6
+	right-6
+    hidden
+    size-10
+	cursor-pointer
+	place-content-center
+	rounded-full
+	bg-[#f0f0f0]
+	opacity-60
+	hover:opacity-100
+	dark:bg-[#555555]"
+	title="Back to top"
+	aria-label="Back to top"
+>
+	<Icon name="ri:arrow-up-double-fill" class="size-8 self-center fill-current" />
+</button>
+
+<script>
+	const backToTop = (document: Document) => {
+		if (!window.matchMedia('(min-width: 1024px)').matches) {
+			return;
+		}
+		const btn = document.getElementById('back-to-top');
+		if (!btn) {
+			return;
+		}
+		btn.addEventListener('click', () =>
+			document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+		);
+		document.addEventListener('scroll', () => {
+			if (document.documentElement.scrollTop >= 20) {
+				btn.classList.replace('hidden', 'flex');
+			} else {
+				btn.classList.replace('flex', 'hidden');
+			}
+		});
+	};
+	backToTop(document);
+	document.addEventListener('astro:before-swap', (e) => backToTop(e.newDocument));
+</script>

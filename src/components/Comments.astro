@@ -1,0 +1,60 @@
+<!-- the element will be created or not depends on parent -->
+<div class="giscus [&_main]:transition-colors"></div>
+
+<!-- script below is bundled to <head> and excuted exactly once -->
+<script>
+	import { GiscusConfig } from '~/config';
+	import { theme } from '~/store';
+
+	const giscusScriptTemplate = document.createElement('script');
+	Object.entries({
+		...GiscusConfig,
+		...{ src: 'https://giscus.app/client.js' },
+	}).forEach(([key, value]) => giscusScriptTemplate.setAttribute(key, value));
+
+	const themeMap: Record<string, string> = {
+		light: 'noborder_light',
+		dark: 'noborder_gray',
+	};
+	const giscusTheme = (siteTheme: string) => {
+		let t = siteTheme;
+		if (t === 'os-default') {
+			t = 'light';
+			if (
+				document.querySelector(':root.dark') ||
+				(document.querySelector(':root:not(.light)') &&
+					window.matchMedia('(prefers-color-scheme: dark)').matches)
+			) {
+				t = 'dark';
+			}
+		}
+		return themeMap[t];
+	};
+
+	const sendMessage = (message: { setConfig: { theme: string } }) => {
+		document
+			.querySelector<HTMLIFrameElement>('iframe.giscus-frame')
+			?.contentWindow?.postMessage({ giscus: message }, 'https://giscus.app');
+	};
+	theme.subscribe((theme) => {
+		sendMessage({
+			setConfig: {
+				theme: giscusTheme(theme),
+			},
+		});
+	});
+
+	// hydrates the comment element
+	const addComments = (document: Document) => {
+		// if the element is not created by its parent. we do not hydrate
+		if (!document.querySelector('.giscus')) {
+			return;
+		}
+		const giscusScript = giscusScriptTemplate.cloneNode(true) as HTMLScriptElement;
+		giscusScript.setAttribute('data-theme', giscusTheme(theme.get()));
+		document.body.appendChild(giscusScript);
+	};
+	addComments(document);
+	// make addComments rerun after view transitions
+	document.addEventListener('astro:after-swap', () => addComments(document));
+</script>

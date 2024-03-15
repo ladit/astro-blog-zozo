@@ -1,0 +1,24 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Page } from 'astro';
+
+type Props = Page;
+const page = Astro.props;
+---
+
+<div class="mt-6 grid grid-cols-2">
+	{
+		page.url.prev ? (
+			<a class="col-span-1 justify-self-end" href={page.url.prev} aria-label="Go to previous page">
+				<Icon name="ri:arrow-left-s-line" class="size-6 fill-current" title="Go to previous page" />
+			</a>
+		) : null
+	}
+	{
+		page.url.next ? (
+			<a class="col-span-1 col-start-2" href={page.url.next} aria-label="Go to next page">
+				<Icon name="ri:arrow-right-s-line" class="size-6 fill-current" title="Go to next page" />
+			</a>
+		) : null
+	}
+</div>

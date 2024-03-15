@@ -1,0 +1,34 @@
+---
+import type { GetStaticPathsOptions } from 'astro';
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import Paginator from '~/components/Paginator.astro';
+import { PageSize } from '~/config';
+import { getPosts } from '~/utils/collection';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	const allPosts = await getPosts(false, 'desc');
+	const dedupTags = new Set<string>();
+	allPosts.forEach((post) => {
+		if (post.data.tags) {
+			post.data.tags.forEach((tag) => {
+				dedupTags.add(tag);
+			});
+		}
+	});
+	return [...dedupTags].flatMap((tag) => {
+		return paginate(
+			allPosts.filter((post) => post.data.tags?.includes(tag) ?? false),
+			{ params: { tag }, pageSize: PageSize }
+		);
+	});
+}
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+---
+
+<ScaffoldLayout title={tag} description={`Posts with tag ${tag}`} currentNav="Tags">
+	{page.data.map((post) => <PostCard {...post} />)}
+	<Paginator {...page} />
+</ScaffoldLayout>

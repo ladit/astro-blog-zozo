@@ -1,0 +1,32 @@
+---
+import type { GetStaticPathsOptions } from 'astro';
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
+import Paginator from '~/components/Paginator.astro';
+import { PageSize } from '~/config';
+import { getPosts } from '~/utils/collection';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	return paginate(await getPosts(false, 'desc'), { pageSize: PageSize });
+}
+
+const { page } = Astro.props;
+---
+
+<ScaffoldLayout title="Archive" description="all articles." currentNav="Archives">
+	{
+		page.data.map((post) => {
+			const date = post.data.lastmod || post.data.date;
+			return (
+				<div class="flex justify-between">
+					<h5 class="text-xl">
+						<a href={`/posts/${post.slug}`} aria-label={`Read post: ${post.data.title}`}>
+							{post.data.title}
+						</a>
+					</h5>
+					{date && <time datetime={date.toISOString()}>{date.toLocaleDateString()}</time>}
+				</div>
+			);
+		})
+	}
+	<Paginator {...page} />
+</ScaffoldLayout>

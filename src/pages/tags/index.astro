@@ -1,0 +1,25 @@
+---
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
+import { getPosts } from '~/utils/collection';
+
+const tagsCount = new Map<string, number>();
+(await getPosts(false, 'desc')).forEach((post) => {
+	post.data.tags?.forEach((tag) => {
+		tagsCount.set(tag, (tagsCount.get(tag) ?? 0) + 1);
+	});
+});
+---
+
+<ScaffoldLayout title="Tags" description="Post tags" currentNav="Tags">
+	<h1 class="mb-8 text-5xl font-extrabold">Tags</h1>
+	<div class="flex flex-wrap items-center justify-center gap-6">
+		{
+			[...tagsCount.entries()].map(([tag, count]) => (
+				<a class="text-lg" href={`/tags/${tag}/1`} aria-label={`More posts of tag ${tag}`}>
+					{tag}
+					<span class="relative -top-2 text-sm text-zinc-500 dark:text-zinc-400">{count}</span>
+				</a>
+			))
+		}
+	</div>
+</ScaffoldLayout>

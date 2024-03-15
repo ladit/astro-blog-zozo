@@ -1,0 +1,154 @@
+---
+import fs from 'node:fs/promises';
+import { Icon } from 'astro-icon/components';
+import Nav from './Nav.astro';
+import ThemeToggler from './ThemeToggler.astro';
+import { SiteTitle, SiteDescription, Socials, Hide } from '~/config';
+
+interface Props {
+	currentNav?: string;
+}
+const { currentNav } = Astro.props;
+
+const customLogo = (await fs.stat('./src/assets/logo.svg')).isFile();
+
+const socialConfig: Record<string, Record<string, string>> = {
+	bilibili: { icon: 'ri:bilibili-fill' },
+	dingding: { icon: 'ri:dingding-fill' },
+	discord: { icon: 'ri:discord-fill' },
+	douban: { icon: 'ri:douban-fill' },
+	dribbble: { icon: 'ri:dribbble-fill' },
+	facebook: { icon: 'ri:facebook-box-fill' },
+	flickr: { icon: 'ri:flickr-fill' },
+	github: { icon: 'ri:github-fill' },
+	gitlab: { icon: 'ri:gitlab-fill' },
+	google: { icon: 'ri:google-fill' },
+	instagram: { icon: 'ri:instagram-fill' },
+	kakaoTalk: { icon: 'ri:kakao-talk-fill' },
+	line: { icon: 'ri:line-fill' },
+	linkedin: { icon: 'ri:linkedin-box-fill' },
+	mail: { icon: 'ri:mail-fill' },
+	mastodon: { icon: 'ri:mastodon-fill' },
+	medium: { icon: 'ri:medium-fill' },
+	messenger: { icon: 'ri:messenger-fill' },
+	miniProgram: { icon: 'ri:mini-program-fill' },
+	neteaseCloudMusic: { icon: 'ri:netease-cloud-music-fill' },
+	notion: { icon: 'ri:notion-fill' },
+	patreon: { icon: 'ri:patreon-fill' },
+	paypal: { icon: 'ri:paypal-fill' },
+	pinterest: { icon: 'ri:pinterest-fill' },
+	playstation: { icon: 'ri:playstation-fill' },
+	productHunt: { icon: 'ri:product-hunt-fill' },
+	qq: { icon: 'ri:qq-fill' },
+	reddit: { icon: 'ri:reddit-fill' },
+	rss: { icon: 'ri:rss-fill', label: 'the RSS link' },
+	skype: { icon: 'ri:skype-fill' },
+	slack: { icon: 'ri:slack-fill' },
+	snapchat: { icon: 'ri:snapchat-fill' },
+	soundcloud: { icon: 'ri:soundcloud-fill' },
+	spotify: { icon: 'ri:spotify-fill' },
+	stackOverflow: { icon: 'ri:stack-overflow-fill' },
+	steam: { icon: 'ri:steam-fill' },
+	switch: { icon: 'ri:switch-fill' },
+	telegram: { icon: 'ri:telegram-fill' },
+	threads: { icon: 'ri:threads-fill' },
+	tiktok: { icon: 'ri:tiktok-fill' },
+	trello: { icon: 'ri:trello-fill' },
+	tumblr: { icon: 'ri:tumblr-fill' },
+	twitch: { icon: 'ri:twitch-fill' },
+	x: { icon: 'ri:twitter-x-fill' },
+	wechat: { icon: 'ri:wechat-fill' },
+	weibo: { icon: 'ri:weibo-fill' },
+	whatsapp: { icon: 'ri:whatsapp-fill' },
+	xbox: { icon: 'ri:xbox-fill' },
+	youtube: { icon: 'ri:youtube-fill' },
+	zhihu: { icon: 'ri:zhihu-fill' },
+};
+
+let socials: Record<string, string>[] = [];
+for (const platform in Socials) {
+	if (Socials[platform].url && socialConfig[platform]) {
+		socials.push({ platform, ...Socials[platform], ...socialConfig[platform] });
+	}
+}
+---
+
+<header class="grid grid-cols-2 items-start justify-between lg:flex">
+	{
+		!Hide.includes('logo') ? (
+			<a
+				transition:persist
+				href="/"
+				aria-label="go to index"
+				class={customLogo ? '' : 'w-[4.5rem] text-4xl'}
+			>
+				{customLogo ? (
+					<Icon name="logo" class="size-16 fill-current" title="go to index" />
+				) : (
+					SiteTitle
+				)}
+			</a>
+		) : (
+			<div />
+		)
+	}
+	<button
+		transition:persist
+		id="menu-btn"
+		class="justify-self-end lg:hidden"
+		title="open menu"
+		aria-label="open menu"
+		aria-expanded="false"
+		aria-controls="menu-items"
+	>
+		<Icon name="ri:menu-fill" class="size-8" />
+	</button>
+	<div id="menu" class="col-span-2 hidden flex-col gap-3 text-center lg:flex lg:items-end">
+		<div class="mb-[2dvh] flex flex-col items-center gap-3 lg:mb-7 lg:flex-row lg:gap-8">
+			<Nav currentNav={currentNav} />
+			{
+				!Hide.includes('search') && (
+					<a href="/search" title="Navigate to search page" aria-label="Navigate to search page">
+						<Icon name="ri:search-2-line" class="opacity-75 hover:opacity-100" />
+					</a>
+				)
+			}
+			{!Hide.includes('themeToggler') && <ThemeToggler />}
+		</div>
+		<Fragment transition:persist>
+			{!Hide.includes('siteDescription') && <div>{SiteDescription}</div>}
+			{
+				socials.length > 0 && (
+					<div class="mt-[2dvh] flex flex-wrap justify-center gap-3 lg:mt-0">
+						{socials.map(({ platform, icon, url, label }) => (
+							<a href={url} aria-label={label ?? platform}>
+								<Icon
+									name={icon}
+									class="fill-current opacity-75 hover:opacity-100"
+									title={label ?? platform}
+								/>
+							</a>
+						))}
+					</div>
+				)
+			}
+		</Fragment>
+	</div>
+</header>
+
+<script>
+	const toggleMenu = (document: Document) => {
+		if (window.matchMedia('(min-width: 1024px)').matches) {
+			return;
+		}
+		const btn = document.getElementById('menu-btn');
+		btn?.addEventListener('click', () => {
+			const menuExpanded = btn.getAttribute('aria-expanded') === 'true';
+			btn.setAttribute('aria-expanded', menuExpanded ? 'false' : 'true');
+			btn.setAttribute('aria-label', menuExpanded ? 'close menu' : 'open menu');
+			document.getElementById('menu')?.classList.toggle('hidden');
+		});
+	};
+	toggleMenu(document);
+	document.addEventListener('astro:before-swap', (e) => toggleMenu(e.newDocument));
+</script>

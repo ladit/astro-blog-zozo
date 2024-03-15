@@ -1,0 +1,108 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import ScaffoldLayout from './ScaffoldLayout.astro';
+import Comments from '~/components/Comments.astro';
+import type { PostHideElements } from '~/content/config';
+import { Hide, type HideElements } from '~/config';
+import 'katex/dist/katex.css';
+
+type Props = CollectionEntry<'posts'>['data'] & {
+	currentNav?: string;
+	socialImage?: string;
+};
+const { title, date, lastmod, tags, readingTime, hide } = Astro.props;
+const show = (key: string) =>
+	!(Hide.includes(key as HideElements) || hide?.includes(key as PostHideElements));
+const showDate = date && show('date');
+const showLastmod = lastmod && show('lastmod');
+const showReadingTime = readingTime && show('readingTime');
+const showTimes = showDate || showLastmod || showReadingTime;
+---
+
+<ScaffoldLayout {...Astro.props}>
+	{title && show('title') && <h1 class="text-5xl font-extrabold">{title}</h1>}
+	<div class="my-[1dvh] text-neutral-600 lg:my-[3dvh] dark:text-neutral-300">
+		{
+			showTimes && (
+				<div class="flex flex-col opacity-70 *:flex *:items-center lg:flex-row lg:gap-4">
+					{showDate && (
+						<time datetime={date.toISOString()}>
+							<Icon name="ri:time-line" class="fill-current" title="date" aria-label="date" />
+							{date.toLocaleString()}
+						</time>
+					)}
+					{showLastmod && (
+						<time datetime={lastmod.toISOString()}>
+							<Icon
+								name="ri:history-line"
+								class="fill-current"
+								title="last modified date"
+								aria-label="last modified date"
+							/>
+							{lastmod.toLocaleString()}
+						</time>
+					)}
+					{showReadingTime && (
+						<span>
+							<Icon
+								name="ri:hourglass-fill"
+								class="fill-current"
+								title="read time"
+								aria-label="read time"
+							/>
+							{readingTime.text}
+						</span>
+					)}
+				</div>
+			)
+		}
+		{
+			tags && show('tags') && (
+				<div>
+					{tags.map((tag: string) => (
+						<a
+							class="mr-2 text-xl opacity-80 hover:opacity-100"
+							href={`/tags/${tag}/1`}
+							aria-label={`More posts of tag ${tag}`}
+						>
+							{tag}
+						</a>
+					))}
+				</div>
+			)
+		}
+	</div>
+	<article
+		class="prose max-w-full dark:prose-invert prose-p:text-justify prose-pre:rounded-lg prose-pre:!bg-neutral-100 prose-img:rounded-lg prose-video:rounded-lg [&_.toc-item]:my-0 [&_.toc-level]:mt-0"
+		class:list={{ '[&_.toc]:hidden': !show('toc') }}
+	>
+		<slot />
+	</article>
+	{
+		show('comments') && (
+			<>
+				<hr class="mx-auto my-4 h-1 w-48 rounded border-0 bg-zinc-200 md:my-10 dark:bg-zinc-700" />
+				<Comments />
+			</>
+		)
+	}
+</ScaffoldLayout>
+<script is:inline type="module">
+	const copy = async (copyButton) => {
+		const code = copyButton.nextElementSibling?.children[0];
+		if (!code) {
+			return;
+		}
+		await navigator.clipboard.writeText(code.textContent);
+		copyButton.setAttribute('aria-pressed', 'true');
+		setTimeout(() => {
+			copyButton.setAttribute('aria-pressed', 'false');
+		}, 700);
+	};
+
+	const copyButtons = Array.from(document.querySelectorAll('.prose button.copy'));
+	for (const copyButton of copyButtons) {
+		copyButton.addEventListener('click', () => copy(copyButton));
+	}
+</script>
