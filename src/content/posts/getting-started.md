@@ -1,6 +1,6 @@
 ---
 title: Getting Started🚀
-description: How to use this blog template
+description: How to use this blog template✨
 date: 2040-03-09T00:00:00+08:00
 tags:
   - sample post

@@ -6,14 +6,17 @@ import sharp from 'sharp';
 import fs from 'node:fs';
 import { Site, SiteTitle, SiteDescription, FooterDescription } from '~/config';
 
-// we can not use all svg for now. It may be a satori bug.
+// satori may have bug when rendering <img src="data:image/svg+xml;base64,...">. You can convert to png like below:
 // const logoImage =
-// 	'data:image/svg+xml;base64,' +
-// 	(await fs.promises.readFile('src/assets/logo.svg')).toString('base64');
+// 	'data:image/png;base64,' +
+// 	(await sharp('src/assets/logo.svg').png().toBuffer()).toString('base64');
+
+// or use a png file
 const logoImage =
 	'data:image/png;base64,' +
 	(await fs.promises.readFile('src/assets/og-logo.png')).toString('base64');
 
+// the font file is integrated to prevent Github action failure for now.
 const font = async () => {
 	const fontPath = 'src/assets/LXGWWenKaiGBScreen.ttf';
 	if (!fs.existsSync(fontPath)) {
@@ -57,7 +60,14 @@ const options: SatoriOptions = {
 				if (!response.ok) {
 					return segment;
 				}
-				return `data:image/svg+xml;base64,${Buffer.from(await response.arrayBuffer()).toString('base64')}`;
+				return (
+					'data:image/png;base64,' +
+					(
+						await sharp(await response.arrayBuffer())
+							.png()
+							.toBuffer()
+					).toString('base64')
+				);
 			} catch {
 				return segment;
 			}
@@ -118,7 +128,13 @@ export async function postOpenGraph({ title, description, tags }: Config) {
 				<div tw="grow flex flex-col pl-4 mt-5">
 					<p tw="text-6xl font-bold">{title}</p>
 					<p tw="text-4xl font-bold">{description}</p>
-					<div tw="flex text-neutral-400">{tags?.map((tag) => <p tw="text-xl mr-4">{tag}</p>)}</div>
+					<div tw="flex text-neutral-400">
+						{tags?.map((tag) => (
+							<p tw="text-xl mr-4" key={tag}>
+								{tag}
+							</p>
+						))}
+					</div>
 				</div>
 			</div>
 			<div tw="mt-5 flex flex-col items-center text-xl">

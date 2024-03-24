@@ -27,6 +27,3 @@ __coverage__/
 
 # Vercel output
 .vercel
-
-# auto download on first time
-src/assets/LXGWWenKaiGBScreen.ttf
