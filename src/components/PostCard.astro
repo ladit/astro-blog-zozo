@@ -32,7 +32,11 @@ if (post.data.hide?.includes('lastmod') && post.data.date) {
 			{
 				(!post.data.hide || !post.data.hide.includes('tags')) &&
 					post.data.tags?.map((tag) => (
-						<a class="mr-2" href={`/tags/${tag}/1`} aria-label={`More posts of tag ${tag}`}>
+						<a
+							class="mr-2 hover:text-neutral-900 dark:hover:text-neutral-100"
+							href={`/tags/${tag}/1`}
+							aria-label={`More posts of tag ${tag}`}
+						>
 							{tag}
 						</a>
 					))

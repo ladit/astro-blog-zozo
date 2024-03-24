@@ -12,4 +12,4 @@ tags:
 
 # This post is hidden
 
-hello.
+It will not be shown in RSS and sitemap. But you can still access it at `/posts/my-hidden-post`.

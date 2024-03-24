@@ -1,11 +1,11 @@
 ---
-title: '药师灌顶真言'
+title: 药师灌顶真言
 date: 2019-04-11T14:26:00+08:00
 tags:
   - sample post
   - 中文
   - 真言
-slug: 'Chinese-Preview'
+  - theme
 ---
 
 > 修学药师灌顶真言是药师法门的一部分，读诵修持有着极大的功德利益

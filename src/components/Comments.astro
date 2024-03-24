@@ -57,4 +57,11 @@
 	addComments(document);
 	// make addComments rerun after view transitions
 	document.addEventListener('astro:after-swap', () => addComments(document));
+
+	window
+		.matchMedia('(prefers-color-scheme: dark)')
+		.addEventListener('change', (e) => e.matches && addComments(document));
+	window
+		.matchMedia('(prefers-color-scheme: light)')
+		.addEventListener('change', (e) => e.matches && addComments(document));
 </script>

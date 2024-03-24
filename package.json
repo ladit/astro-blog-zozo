@@ -1,6 +1,6 @@
 {
   "name": "astro-blog-zozo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Ladit",
     "email": "i@ladit.me",
@@ -23,7 +23,8 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro check && eslint . && astro build",
-    "preview": "wrangler pages dev ./dist",
+    "preview": "astro preview",
+    "preview:wrangler": "wrangler pages dev ./dist",
     "astro": "astro",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

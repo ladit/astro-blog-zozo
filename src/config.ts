@@ -12,7 +12,7 @@ export const PageSize = 15;
 // check components/Header.astro socialConfig for more info
 export const Socials: Record<string, Record<string, string>> = {
 	mail: { url: 'mailto:i@ladit.me' },
-	github: { url: 'https://github.com/ladit' },
+	github: { url: 'https://github.com/ladit/astro-blog-zozo' },
 	x: { url: 'https://x.com/userName' },
 	mastodon: { url: 'https://mastodon.social/@userName' },
 	facebook: { url: 'https://facebook.com/userName' },
@@ -34,6 +34,7 @@ export const Socials: Record<string, Record<string, string>> = {
 	rss: { url: '/rss.xml' },
 };
 
+// doc: https://giscus.app
 // data-theme is auto changed between noborder_light / noborder_gray
 export const GiscusConfig: Record<string, string> = {
 	'data-repo': 'ladit/astro-blog-zozo',
