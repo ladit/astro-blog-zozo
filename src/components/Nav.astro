@@ -14,13 +14,13 @@ const navs = [
 ---
 
 <nav>
-	<ul class="flex flex-col gap-3 lg:flex-row">
+	<ul class="flex flex-col gap-3 font-default-sans lg:flex-row">
 		{
 			navs.map((nav) => (
 				<li>
 					<button
 						type="button"
-						class="text-neutral-700 opacity-75 hover:opacity-100 aria-pressed:opacity-100 dark:text-neutral-50"
+						class="text-neutral-700 opacity-75 aria-pressed:opacity-100 hover:opacity-100 dark:text-neutral-50"
 						aria-pressed={currentNav === nav.name ? 'true' : 'false'}
 						aria-label={`Navigate to ${nav.name}`}
 						data-nav={nav.name}

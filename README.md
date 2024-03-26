@@ -4,8 +4,8 @@ An opinionated and neat blog template built with [Astro](https://astro.build). T
 
 Check out the ✨ [Live Demo](https://astro-blog-zozo.pages.dev/) ✨.
 
-<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-light.png" height="300"></a>
-<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-dark.png" height="300"></a>
+<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-light.png" height="500"></a>
+<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-dark.png" height="500"></a>
 
 ## Features
 
@@ -29,7 +29,6 @@ See [this post](https://astro-blog-zozo.pages.dev/posts/getting-started) for usi
 ## Todo
 
 - `@shikijs/transformers` require custom style
-- svg can not be embeded in open graph image. Maybe a satori bug.
 - i18n
 
 ## Contribute

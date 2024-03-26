@@ -13,3 +13,5 @@ tags:
 # This post is hidden
 
 It will not be shown in RSS and sitemap. But you can still access it at `/posts/my-hidden-post`.
+
+Note that if you deploy on public Github repo, hidden posts may be seen in build output such as workflow artifacts.

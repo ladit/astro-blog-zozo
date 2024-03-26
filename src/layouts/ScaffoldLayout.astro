@@ -14,10 +14,38 @@ interface Props {
 
 <BaseLayout
 	{...Astro.props}
-	bodyClass="text-neutral-600 flex flex-col justify-between min-h-dvh py-[2dvh] lg:pt-[6dvh] lg:pb-[3dvh] bg-[#f7f7f7] bg-local dark:bg-[#202124] dark:text-neutral-50"
+	rootClass="scrollbar-none"
+	bodyClass={[
+		'text-neutral-600',
+		'flex',
+		'flex-col',
+		'justify-between',
+		'min-h-dvh',
+		'py-[2dvh]',
+		'lg:pt-[6dvh]',
+		'lg:pb-[3dvh]',
+		'bg-[#f7f7f7]',
+		'bg-local',
+		'dark:bg-[#202124]',
+		'dark:text-neutral-50',
+	]}
 >
 	<div
-		class="mx-auto flex w-[90dvw] max-w-[1400px] grow flex-col bg-neutral-50 bg-local p-[3dvw] shadow-[0_0.5em_1em_0_rgba(236,236,236,0.86)] lg:p-[2dvw] dark:bg-[#212223] dark:shadow-[0_0_0.5em_0.25em_rgba(136,136,136,0.35)]"
+		class:list={[
+			'mx-auto',
+			'flex',
+			'w-[90dvw]',
+			'max-w-[1400px]',
+			'grow',
+			'flex-col',
+			'bg-neutral-50',
+			'bg-local',
+			'p-[3dvw]',
+			'shadow-[0_0.5em_1em_0_rgba(236,236,236,0.86)]',
+			'lg:p-[2dvw]',
+			'dark:bg-[#212223]',
+			'dark:shadow-[0_0_0.5em_0.25em_rgba(136,136,136,0.35)]',
+		]}
 	>
 		<Header currentNav={Astro.props.currentNav} />
 		<main class="px-[2dvw] pt-[2dvh] lg:pt-[6dvh]">

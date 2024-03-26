@@ -28,6 +28,7 @@ public              # favicons here
 src
 ├── assets
 │   ├── logo.svg    # site logo read in components/Header.astro
+│   ├── og-logo.png # logo image for OG generation. Check src/utils/openGraphImage.tsx for detail
 ├── config.ts       # main config
 ├── content         # markdown posts and attachments go here
 │   ├── attachments

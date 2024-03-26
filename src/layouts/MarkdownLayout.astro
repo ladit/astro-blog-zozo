@@ -74,8 +74,27 @@ const showTimes = showDate || showLastmod || showReadingTime;
 		}
 	</div>
 	<article
-		class="prose max-w-full dark:prose-invert prose-p:hyphens-auto prose-p:text-justify prose-pre:rounded-lg prose-pre:!bg-neutral-100 prose-img:rounded-lg prose-video:rounded-lg [&_.toc-item]:my-0 [&_.toc-level]:mt-0 [&_p_code]:rounded [&_p_code]:bg-neutral-100 [&_p_code]:p-1 [&_p_code]:before:content-none [&_p_code]:after:content-none dark:[&_p_code]:bg-[#121212]"
-		class:list={{ '[&_.toc]:hidden': !show('toc') }}
+		class:list={[
+			'prose',
+			'max-w-full',
+			'dark:prose-invert',
+			'prose-p:hyphens-auto',
+			'prose-p:text-justify',
+			'prose-pre:rounded-lg',
+			'prose-pre:!bg-neutral-100', // override shiki theme
+			'prose-img:rounded-lg',
+			'prose-video:rounded-lg',
+			'[&_.toc-item]:my-0',
+			'[&_.toc-level]:mt-0',
+			'[&_iframe]:rounded-lg',
+			'[&_p_code]:rounded',
+			'[&_p_code]:bg-neutral-100',
+			'[&_p_code]:p-1',
+			'[&_p_code]:before:content-none',
+			'[&_p_code]:after:content-none',
+			'dark:[&_p_code]:bg-[#121212]',
+			{ '[&_.toc]:hidden': !show('toc') },
+		]}
 	>
 		<slot />
 	</article>

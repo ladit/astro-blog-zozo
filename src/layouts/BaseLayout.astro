@@ -118,6 +118,10 @@ const socialImg = new URL(socialImage ?? '/og.png', Astro.url).href;
 						}
 					}
 				}
+
+				.prose pre {
+					@apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-200 dark:scrollbar-thumb-neutral-700;
+				}
 			}
 
 			@tailwind components;
