@@ -109,3 +109,15 @@ In the repository, go to Settings > Pages > Build and deployment. Select `Github
 Github workflow(`.github/workflows/pages.yaml`) will deploy for you everytime you push to the default branch.
 
 To add a custom domain, check [the doc](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages).
+
+### deploy to Vercel
+
+Link your Github account to Vercel and import your blog repo to it.
+
+Build settings:
+
+Framework: Astro
+
+Build command overwrite: `bun run build`
+
+To add a custom domain, check [the doc](https://vercel.com/docs/projects/domains/add-a-domain).

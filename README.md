@@ -4,8 +4,8 @@ An opinionated and neat blog template built with [Astro](https://astro.build). T
 
 Check out the ✨ [Live Demo](https://astro-blog-zozo.pages.dev/) ✨.
 
-<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-light.png" height="500"></a>
-<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-dark.png" height="500"></a>
+<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-light.png" height="354"></a>
+<a href="https://astro-blog-zozo.pages.dev/"><img src="./screenshot-dark.png" height="354"></a>
 
 ## Features
 
