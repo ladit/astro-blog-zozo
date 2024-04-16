@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
-import compress from '@playform/compress-astro';
+import compress from '@playform/compress';
 import pagefind from 'astro-pagefind';
 import emoji from 'remark-emoji';
 import remarkMath from 'remark-math';
