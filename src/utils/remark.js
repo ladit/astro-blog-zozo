@@ -1,9 +1,9 @@
+import { statSync } from 'node:fs';
+import { toString as mdToString } from 'mdast-util-to-string';
 import getReadingTime from 'reading-time';
-import { toString } from 'mdast-util-to-string';
-import { statSync } from 'fs';
 
 export function remarkPostTime() {
-	return function (_tree, { history, data }) {
+	return (_tree, { history, data }) => {
 		const stat = statSync(history[0]);
 		const frontmatter = data.astro.frontmatter;
 		if (frontmatter.date === undefined) {
@@ -16,10 +16,10 @@ export function remarkPostTime() {
 }
 
 export function remarkReadingTime() {
-	return function (tree, { data }) {
+	return (tree, { data }) => {
 		const frontmatter = data.astro.frontmatter;
 		if (frontmatter.readingTime === undefined) {
-			frontmatter.readingTime = getReadingTime(toString(tree));
+			frontmatter.readingTime = getReadingTime(mdToString(tree));
 		}
 	};
 }

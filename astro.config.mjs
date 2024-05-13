@@ -1,16 +1,8 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
-import icon from 'astro-icon';
-import compress from '@playform/compress';
-import pagefind from 'astro-pagefind';
-import emoji from 'remark-emoji';
-import remarkMath from 'remark-math';
+import tailwind from '@astrojs/tailwind';
 import toc from '@jsdevtools/rehype-toc';
-import rehypeKatax from 'rehype-katex';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
-import rehypeExternalLinks from 'rehype-external-links';
+import compress from '@playform/compress';
 import {
 	transformerMetaHighlight,
 	transformerMetaWordHighlight,
@@ -20,12 +12,22 @@ import {
 	transformerNotationHighlight,
 	transformerNotationWordHighlight,
 } from '@shikijs/transformers';
+import icon from 'astro-icon';
+import pagefind from 'astro-pagefind';
+import { defineConfig } from 'astro/config';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypeKatax from 'rehype-katex';
+import emoji from 'remark-emoji';
+import remarkMath from 'remark-math';
 import { Site } from './src/config';
 import { getMarkdownEntries } from './src/utils/post';
+import { remarkPostTime, remarkReadingTime } from './src/utils/remark';
 import { transformerEnhanser } from './src/utils/shiki';
-import { remarkReadingTime, remarkPostTime } from './src/utils/remark';
 
-const excludeSitemapFiles = (await getMarkdownEntries()).filter((entry) => entry.file.data.hidden);
+const excludeSitemapFiles = (await getMarkdownEntries()).filter(
+	(entry) => entry.file.data.hidden,
+);
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,7 +44,8 @@ export default defineConfig({
 		}),
 		pagefind(),
 		sitemap({
-			filter: (page) => !excludeSitemapFiles.some((entry) => entry.url.href === page),
+			filter: (page) =>
+				!excludeSitemapFiles.some((entry) => entry.url.href === page),
 		}),
 		compress({
 			CSS: {

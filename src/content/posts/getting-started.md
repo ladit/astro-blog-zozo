@@ -19,7 +19,7 @@ bun install
 
 ### populate your content
 
-To craft your own site further, check the folders below and modify anything as you wish. Markdown post with frontmatter is supported.
+To craft your own site further, check the folders below and modify anything as you wish. Markdown post with frontmatters is supported.
 
 ```
 public              # favicons here
@@ -69,7 +69,7 @@ Note: to use the Astro `Content Collection` feature, the site content must be pl
 
 ### comments
 
-Post comments is powered by [giscus](https://github.com/giscus/giscus). So your blog visitors should login to Github to leave a comment. Follow instructions [here](https://giscus.app/) to initialize your Github repo, install giscus app, enable discussion and get your parameters to fill in `src/config.ts: GiscusConfig`.
+Post comments is powered by [giscus](https://github.com/giscus/giscus). So your blog visitors should login Github to leave a comment. Follow instructions [here](https://giscus.app/) to initialize your Github repo, install giscus app, enable discussion and get your parameters to fill in `src/config.ts: GiscusConfig`.
 
 To restrict the domains that can load giscus with your repository's discussions, rename `giscus.example.json` to `giscus.json` and modify it. Document is [here](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md).
 
@@ -93,7 +93,7 @@ Evironments:
 
 ```shell
 BUN_VERSION=latest
-NODE_VERSION=20.11.1
+NODE_VERSION=20.13.1
 ```
 
 To add a custom domain, check [the doc](https://developers.cloudflare.com/pages/configuration/custom-domains/).

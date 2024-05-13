@@ -1,6 +1,14 @@
-import { z, defineCollection } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 
-const hideElements = z.enum(['title', 'date', 'lastmod', 'tags', 'readingTime', 'toc', 'comments']);
+const hideElements = z.enum([
+	'title',
+	'date',
+	'lastmod',
+	'tags',
+	'readingTime',
+	'toc',
+	'comments',
+]);
 export type PostHideElements = z.infer<typeof hideElements>;
 
 const posts = defineCollection({

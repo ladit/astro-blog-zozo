@@ -1,10 +1,10 @@
 ---
-import { type CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
-import ScaffoldLayout from './ScaffoldLayout.astro';
 import Comments from '~/components/Comments.astro';
-import type { PostHideElements } from '~/content/config';
 import { Hide, type HideElements } from '~/config';
+import type { PostHideElements } from '~/content/config';
+import ScaffoldLayout from './ScaffoldLayout.astro';
 import 'katex/dist/katex.css';
 
 type Props = CollectionEntry<'posts'>['data'] & {
@@ -13,7 +13,10 @@ type Props = CollectionEntry<'posts'>['data'] & {
 };
 const { title, date, lastmod, tags, readingTime, hide } = Astro.props;
 const show = (key: string) =>
-	!(Hide.includes(key as HideElements) || hide?.includes(key as PostHideElements));
+	!(
+		Hide.includes(key as HideElements) ||
+		hide?.includes(key as PostHideElements)
+	);
 const showDate = date && show('date');
 const showLastmod = lastmod && show('lastmod');
 const showReadingTime = readingTime && show('readingTime');

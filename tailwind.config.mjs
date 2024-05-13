@@ -1,6 +1,6 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
 import typography from '@tailwindcss/typography';
 import scrollbar from 'tailwind-scrollbar';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -29,6 +29,9 @@ export default {
 	],
 	darkMode: [
 		'variant',
-		['@media (prefers-color-scheme: dark) { &:not(.light *) }', '&:is(.dark *)'],
+		[
+			'@media (prefers-color-scheme: dark) { &:not(.light *) }',
+			'&:is(.dark *)',
+		],
 	],
 };

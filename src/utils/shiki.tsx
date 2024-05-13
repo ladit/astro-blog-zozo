@@ -1,9 +1,9 @@
 /* @jsxRuntime automatic */
 /** @jsxImportSource hastscript */
 
-import type { ShikiTransformer } from 'shiki';
 import type { Element, ElementContent } from 'hast';
-import { CopyButtonIcon, CopyButtonDoneIcon } from './shikiCopyButton';
+import type { ShikiTransformer } from 'shiki';
+import { CopyButtonDoneIcon, CopyButtonIcon } from './shikiCopyButton';
 
 interface TransformerEnhanserOptions {
 	// class name for language hint, or `false` to disable
@@ -12,7 +12,8 @@ interface TransformerEnhanserOptions {
 	copyButton?: string | boolean;
 }
 
-const languageHintDefaultClass = 'absolute right-2 -top-3 text-sm group-hover:hidden';
+const languageHintDefaultClass =
+	'absolute right-2 -top-3 text-sm group-hover:hidden';
 const copyButtonDefaultClass =
 	'copy group hidden absolute right-2 top-2 px-1 bg-[#121212] rounded-md dark:bg-neutral-100 group-hover:block';
 
@@ -35,7 +36,10 @@ for (const copyButton of copyButtons) {
 	copyButton.addEventListener('click', () => copy(copyButton));
 }
 */
-export function transformerEnhanser(options?: TransformerEnhanserOptions): ShikiTransformer {
+export function transformerEnhanser(
+	o?: TransformerEnhanserOptions,
+): ShikiTransformer {
+	let options = o;
 	if (!options) {
 		options = {
 			languageHint: languageHintDefaultClass,
@@ -59,21 +63,24 @@ export function transformerEnhanser(options?: TransformerEnhanserOptions): Shiki
 		},
 		root: (root) => {
 			const pre = root.children[0] as Element;
-			const wrapper = <div class="group relative"></div>;
-			if (options!.languageHint) {
+			const wrapper = <div class="group relative" />;
+			if (options.languageHint) {
 				wrapper.children.push(
-					(<span class={options!.languageHint}>{pre.properties!.lang}</span>) as ElementContent
+					(
+						<span class={options.languageHint}>{pre.properties?.lang}</span>
+					) as ElementContent,
 				);
 			}
-			if (options!.copyButton) {
+			if (options.copyButton) {
 				// the click event is handled in MarkdownLayout
 				const button = (
 					<button
-						class={options!.copyButton}
+						type="button"
+						class={options.copyButton}
 						title="Copy code"
 						aria-label="Copy code"
 						aria-pressed="false"
-					></button>
+					/>
 				) as Element;
 				(CopyButtonIcon as Element).properties.class =
 					'size-6 fill-neutral-100 dark:fill-[#121212] group-aria-pressed:hidden';
@@ -81,7 +88,7 @@ export function transformerEnhanser(options?: TransformerEnhanserOptions): Shiki
 					'hidden size-6 fill-neutral-100 dark:fill-[#121212] group-aria-pressed:block';
 				button.children.push(
 					CopyButtonIcon as ElementContent,
-					CopyButtonDoneIcon as ElementContent
+					CopyButtonDoneIcon as ElementContent,
 				);
 				wrapper.children.push(button as ElementContent);
 			}

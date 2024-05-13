@@ -1,9 +1,9 @@
 ---
 import fs from 'node:fs/promises';
 import { Icon } from 'astro-icon/components';
+import { Hide, SiteDescription, SiteTitle, Socials } from '~/config';
 import Nav from './Nav.astro';
 import ThemeToggler from './ThemeToggler.astro';
-import { SiteTitle, SiteDescription, Socials, Hide } from '~/config';
 
 interface Props {
 	currentNav?: string;
@@ -65,7 +65,7 @@ const socialConfig: Record<string, Record<string, string>> = {
 	zhihu: { icon: 'ri:zhihu-fill' },
 };
 
-let socials: Record<string, string>[] = [];
+const socials: Record<string, string>[] = [];
 for (const platform in Socials) {
 	if (Socials[platform].url && socialConfig[platform]) {
 		socials.push({ platform, ...Socials[platform], ...socialConfig[platform] });

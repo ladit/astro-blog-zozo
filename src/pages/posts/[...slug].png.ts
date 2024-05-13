@@ -1,7 +1,7 @@
-import type { APIContext } from 'astro';
 import { getEntry } from 'astro:content';
-import { postOpenGraph } from '~/utils/openGraphImage';
+import type { APIContext } from 'astro';
 import { getPosts } from '~/utils/collection';
+import { postOpenGraph } from '~/utils/openGraphImage';
 
 export async function getStaticPaths() {
 	return (await getPosts()).map((post) => ({
@@ -19,6 +19,6 @@ export const GET = async ({ params }: APIContext) => {
 		}),
 		{
 			headers: { 'content-type': 'image/png' },
-		}
+		},
 	);
 };

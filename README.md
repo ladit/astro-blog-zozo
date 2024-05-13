@@ -21,6 +21,7 @@ Check out the ✨ [Live Demo](https://astro-blog-zozo.pages.dev/) ✨.
 - RSS generation
 - Sitemap.xml generation
 - dynamic open graph image generation
+- Hide unwanted elements through [config](./src/config.ts)
 
 ## Getting Started
 

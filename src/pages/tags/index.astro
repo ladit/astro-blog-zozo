@@ -3,11 +3,12 @@ import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
 import { getPosts } from '~/utils/collection';
 
 const tagsCount = new Map<string, number>();
-(await getPosts(false, 'desc')).forEach((post) => {
-	post.data.tags?.forEach((tag) => {
+const posts = await getPosts(false, 'desc');
+for (const post of posts) {
+	for (const tag of post.data.tags ?? []) {
 		tagsCount.set(tag, (tagsCount.get(tag) ?? 0) + 1);
-	});
-});
+	}
+}
 ---
 
 <ScaffoldLayout title="Tags" description="Post tags" currentNav="Tags">

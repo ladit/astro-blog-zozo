@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPathsOptions } from 'astro';
-import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
 import Paginator from '~/components/Paginator.astro';
 import { PageSize } from '~/config';
+import ScaffoldLayout from '~/layouts/ScaffoldLayout.astro';
 import { getPosts } from '~/utils/collection';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {

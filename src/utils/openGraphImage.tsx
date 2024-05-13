@@ -1,10 +1,10 @@
 /* @jsxRuntime automatic */
 /** @jsxImportSource react */
 
+import fs from 'node:fs';
 import satori, { type SatoriOptions } from 'satori';
 import sharp from 'sharp';
-import fs from 'node:fs';
-import { Site, SiteTitle, SiteDescription, FooterDescription } from '~/config';
+import { FooterDescription, Site, SiteDescription, SiteTitle } from '~/config';
 
 // satori may have bug when rendering <img src="data:image/svg+xml;base64,...">. You can convert to png like below:
 // const logoImage =
@@ -12,9 +12,9 @@ import { Site, SiteTitle, SiteDescription, FooterDescription } from '~/config';
 // 	(await sharp('src/assets/logo.svg').png().toBuffer()).toString('base64');
 
 // or use a png file
-const logoImage =
-	'data:image/png;base64,' +
-	(await fs.promises.readFile('src/assets/og-logo.png')).toString('base64');
+const logoImage = `data:image/png;base64,${(
+	await fs.promises.readFile('src/assets/og-logo.png')
+).toString('base64')}`;
 
 // the font file is integrated to prevent Github action failure for now.
 const font = async () => {
@@ -26,7 +26,9 @@ const font = async () => {
 			'https://github.com/lxgw/LxgwWenKai-Screen/releases/latest/download/LXGWWenKaiGBScreen.ttf';
 		const response = await fetch(remoteFont);
 		if (!response.ok) {
-			throw new Error(`can not download font from ${remoteFont} while generating open graph image`);
+			throw new Error(
+				`can not download font from ${remoteFont} while generating open graph image`,
+			);
 		}
 		fs.promises.writeFile(fontPath, new DataView(await response.arrayBuffer()));
 	}
@@ -55,19 +57,16 @@ const options: SatoriOptions = {
 		if (languageCode === 'emoji') {
 			try {
 				const response = await fetch(
-					`https://cdn.jsdelivr.net/gh/shuding/fluentui-emoji-unicode/assets/${segment}_color.svg`
+					`https://cdn.jsdelivr.net/gh/shuding/fluentui-emoji-unicode/assets/${segment}_color.svg`,
 				);
 				if (!response.ok) {
 					return segment;
 				}
-				return (
-					'data:image/png;base64,' +
-					(
-						await sharp(await response.arrayBuffer())
-							.png()
-							.toBuffer()
-					).toString('base64')
-				);
+				return `data:image/png;base64,${(
+					await sharp(await response.arrayBuffer())
+						.png()
+						.toBuffer()
+				).toString('base64')}`;
 			} catch {
 				return segment;
 			}
@@ -90,7 +89,7 @@ export async function siteOpenGraph() {
 				style={{ boxShadow: '0 0 20px 10px rgb(136, 136, 136, 0.35)' }}
 			>
 				<div tw="grow flex flex-col pl-4 mt-2">
-					<img src={logoImage} tw="h-20 w-18" />
+					<img alt="logo" src={logoImage} tw="h-20 w-18" />
 					<div tw="mt-2 grow flex flex-col items-center">
 						<p tw="text-9xl font-bold">{SiteTitle}</p>
 						<p tw="text-7xl text-neutral-500 font-bold">{SiteDescription}</p>
@@ -122,7 +121,7 @@ export async function postOpenGraph({ title, description, tags }: Config) {
 				style={{ boxShadow: '0 0 20px 10px rgb(136, 136, 136, 0.35)' }}
 			>
 				<div tw="flex justify-between mt-2">
-					<img src={logoImage} tw="h-20 w-18" />
+					<img alt="logo" src={logoImage} tw="h-20 w-18" />
 					<p tw="text-3xl">{SiteDescription}</p>
 				</div>
 				<div tw="grow flex flex-col pl-4 mt-5">

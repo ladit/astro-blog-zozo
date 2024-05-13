@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import MarkdownLayout from '~/layouts/MarkdownLayout.astro';
 import { getPosts } from '~/utils/collection';
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'posts'>;
 
 const post = Astro.props;
-const socialImage = post.data.image?.src ?? Astro.url.pathname + '.png';
+const socialImage = post.data.image?.src ?? `${Astro.url.pathname}.png`;
 const { Content, remarkPluginFrontmatter } = await post.render();
 
 // remarkPluginFrontmatter.date will be changed to string, so we parse it again.
