@@ -93,7 +93,7 @@ Evironments:
 
 ```shell
 BUN_VERSION=latest
-NODE_VERSION=20.13.1
+NODE_VERSION=v22.11.0
 ```
 
 To add a custom domain, check [the doc](https://developers.cloudflare.com/pages/configuration/custom-domains/).
